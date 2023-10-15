@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useMemo } from "react";
+import { useState, useEffect, useContext, useMemo, useCallback } from "react";
 import { ThemeContext } from "./context";
 
 export const Addition = () => {
@@ -7,9 +7,12 @@ export const Addition = () => {
   const [num2, setNum2] = useState(2);
   const [response, setResponse] = useState("");
   const [score, setScore] = useState(0);
+  const [answer, setAnswer] = useState(3);
   const sc = useMemo(() => {
     return score ** 2;
   }, [score]);
+  const fn = (num1: number, num2: number) => setAnswer(num1 + num2);
+  const Add = useCallback(fn, []);
 
   const updateResponse = (event: React.ChangeEvent<HTMLInputElement>) => {
     setResponse(event.target.value);
@@ -53,6 +56,11 @@ export const Addition = () => {
       <div>Score: {score} </div>
       <p>The current color is {theme}.</p>;
       <h1>The current score squared is {sc}.</h1> ;
+      <h1 style={{ color: theme }}>
+        {" "}
+        "{num1} plus {num2} is:" {answer}.
+      </h1>
+      ;<div>{num1 + num2}</div>
     </div>
   );
 };
